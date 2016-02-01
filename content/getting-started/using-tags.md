@@ -19,21 +19,54 @@ To add a tag to a specific version of your package, use
 ## Publishing with tags
 
 By default, `npm publish` will tag your package with the `latest` tag. If you
-use the `--tag` flag, you can specify another tag to use. For example, the
-following will publish your package with the `beta` tag:
+use the `--tag` flag, you can specify another tag to use.
 
 ```
-npm publish --tag beta
+npm publish --tag <tag>
 ```
 
 ## Installing with tags
 
 Like `npm publish`, `npm install <pkg>` will use the `latest` tag by default.
-To override this behavior, use `npm install <pkg>@<tag>`. The following example
-will install the `somepkg` at the version that has been tagged with `beta`.
+To override this behavior, use `npm install <pkg>@<tag>`.
 
 ```
-npm install somepkg@beta
+npm install <package>@<tag>
+```
+
+## Example
+
+Let's say you're the publisher of a module called `happycat`. Its purpose is
+to brighten the lives of tired programmers by peppering output and log files
+with cat gifs. You've just implemented a new feature in v0.2 to decorate every
+`console` message with ASCII cats, but are wary of publishing such a big change
+to all your users. You'll use the `ascii-console` tag to publish the new
+feature to anyone on npm who wants it, and wait for their feedback before
+rolling it into the main package. Make sure you've checked out the version with
+the new feature, and then publish to npm with the new tag:
+
+```
+git checkout v0.2
+npm publish --tag ascii-console
+```
+
+Now, users can access the new feature by specifying the tag to install:
+
+```
+npm install happycat@ascii-console
+```
+
+When you're satisfied that the ASCII feature is ready for all users, simply add
+the `latest` tag to version 0.2:
+
+```
+npm dist-tag add happycat@0.2 latest
+```
+
+Now your users will get the ASCII feature by default:
+
+```
+npm install happycat
 ```
 
 ## Caveats
